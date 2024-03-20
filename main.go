@@ -2,9 +2,9 @@ package myresponses
 
 import (
 	"log"
-	"my-responses/responsegraph"
 	"net/http"
 
+	"github.com/ketutkusuma/my-responses/responsegraph"
 	"github.com/labstack/echo"
 )
 
