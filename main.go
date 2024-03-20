@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/ketutkusuma/my-responses/responsegraph"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 func HandleSuccess(c echo.Context, data interface{}) error {
