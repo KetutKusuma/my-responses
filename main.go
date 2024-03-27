@@ -74,6 +74,9 @@ func HandleErrorNotFound(c echo.Context, whatNotfound string) error {
 
 func HandleErrorInternal(c echo.Context, message string) error {
 	status := http.StatusInternalServerError
+	if message == "record not found" {
+		status = 404
+	}
 	res := responsegraph.ResponseGeneric{
 		Code:    status,
 		Message: message,
