@@ -83,3 +83,14 @@ func HandleErrorInternal(c echo.Context, message string) error {
 	}
 	return c.JSON(status, res)
 }
+
+func HandleSuccessPaginate(c echo.Context, data interface{}, paginate responsegraph.Paginate) error {
+	status := 200
+	res := responsegraph.ResponseGenericPaginate{
+		Code:     status,
+		Message:  "Success",
+		Data:     data,
+		Paginate: paginate,
+	}
+	return c.JSON(status, res)
+}
