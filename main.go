@@ -52,6 +52,18 @@ func HandleSuccessCustom(c echo.Context, data interface{}, status int, message *
 	return c.JSON(status, res)
 }
 
+func HandleBadrequest(c echo.Context, message string) error {
+	status := http.StatusBadRequest
+	if message == "record not found" {
+		status = 404
+	}
+	res := responsegraph.ResponseGeneric{
+		Code:    status,
+		Message: message,
+	}
+	return c.JSON(status, res)
+}
+
 func HandleError(c echo.Context, status int, message string) error {
 	if message == "record not found" {
 		status = 404
