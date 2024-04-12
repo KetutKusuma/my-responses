@@ -3,6 +3,7 @@ package myresponses
 import (
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/ketutkusuma/my-responses/responsegraph"
 	"github.com/labstack/echo/v4"
@@ -16,11 +17,11 @@ func HandleSuccess(c echo.Context, data interface{}) error {
 	}
 	return c.JSON(http.StatusOK, res)
 }
-func HandleSuccessMsg(c echo.Context, msg string) error {
+func HandleSuccessMsg(c echo.Context, msg ...string) error {
 	status := 201
 	res := responsegraph.ResponseGeneric{
 		Code:    status,
-		Message: msg,
+		Message: strings.Join(msg, " "),
 		Data:    nil,
 	}
 
@@ -52,25 +53,30 @@ func HandleSuccessCustom(c echo.Context, data interface{}, status int, message *
 	return c.JSON(status, res)
 }
 
-func HandleBadrequest(c echo.Context, message string) error {
+func HandleBadrequest(c echo.Context, message ...string) error {
 	status := http.StatusBadRequest
-	if message == "record not found" {
+	if message[0] == "record not found" {
 		status = 404
 	}
 	res := responsegraph.ResponseGeneric{
 		Code:    status,
-		Message: message,
+		Message: strings.Join(message, " "),
 	}
 	return c.JSON(status, res)
 }
 
-func HandleError(c echo.Context, status int, message string) error {
-	if message == "record not found" {
+func HandleError(c echo.Context, status int, message ...string) error {
+	if len(message) > 1 {
+		if message[1] == "record not found" {
+			status = 404
+		}
+	}
+	if message[0] == "record not found" {
 		status = 404
 	}
 	res := responsegraph.ResponseGeneric{
 		Code:    status,
-		Message: message,
+		Message: strings.Join(message, " "),
 	}
 	return c.JSON(status, res)
 }
@@ -84,14 +90,19 @@ func HandleErrorNotFound(c echo.Context, whatNotfound string) error {
 	return c.JSON(status, res)
 }
 
-func HandleErrorInternal(c echo.Context, message string) error {
+func HandleErrorInternal(c echo.Context, message ...string) error {
 	status := http.StatusInternalServerError
-	if message == "record not found" {
+	if len(message) > 1 {
+		if message[1] == "record not found" {
+			status = 404
+		}
+	}
+	if message[0] == "record not found" {
 		status = 404
 	}
 	res := responsegraph.ResponseGeneric{
 		Code:    status,
-		Message: message,
+		Message: strings.Join(message, " "),
 	}
 	return c.JSON(status, res)
 }
