@@ -90,6 +90,6 @@ func ErrorShowErrorLogrus(c echo.Context, message ...string) {
 			"Error":      message,
 			"Real IP":    c.RealIP(),
 		},
-	).Errorln("Request error : ")
+	).Error("Request error :")
 
 }
