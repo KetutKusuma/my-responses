@@ -53,60 +53,6 @@ func HandleSuccessCustom(c echo.Context, data interface{}, status int, message *
 	return c.JSON(status, res)
 }
 
-func HandleBadrequest(c echo.Context, message ...string) error {
-	status := http.StatusBadRequest
-	if message[0] == "record not found" {
-		status = 404
-	}
-	res := responsegraph.ResponseGeneric{
-		Code:    status,
-		Message: strings.Join(message, " "),
-	}
-	return c.JSON(status, res)
-}
-
-func HandleError(c echo.Context, status int, message ...string) error {
-	if len(message) > 1 {
-		if message[1] == "record not found" {
-			status = 404
-		}
-	}
-	if message[0] == "record not found" {
-		status = 404
-	}
-	res := responsegraph.ResponseGeneric{
-		Code:    status,
-		Message: strings.Join(message, " "),
-	}
-	return c.JSON(status, res)
-}
-
-func HandleErrorNotFound(c echo.Context, whatNotfound string) error {
-	status := http.StatusNotFound
-	res := responsegraph.ResponseGeneric{
-		Code:    status,
-		Message: "Not found " + whatNotfound,
-	}
-	return c.JSON(status, res)
-}
-
-func HandleErrorInternal(c echo.Context, message ...string) error {
-	status := http.StatusInternalServerError
-	if len(message) > 1 {
-		if message[1] == "record not found" {
-			status = 404
-		}
-	}
-	if message[0] == "record not found" {
-		status = 404
-	}
-	res := responsegraph.ResponseGeneric{
-		Code:    status,
-		Message: strings.Join(message, " "),
-	}
-	return c.JSON(status, res)
-}
-
 func HandleSuccessPaginate(c echo.Context, data interface{}, paginate responsegraph.Paginate) error {
 	status := 200
 	res := responsegraph.ResponseGenericPaginate{
