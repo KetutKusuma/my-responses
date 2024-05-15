@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/ketutkusuma/my-responses/logrus_init"
 	"github.com/ketutkusuma/my-responses/responsegraph"
 	"github.com/labstack/echo/v4"
 	"github.com/sirupsen/logrus"
@@ -76,7 +77,7 @@ func HandleErrorInternal(c echo.Context, message ...string) error {
 }
 
 func ErrorShowErrorLogrus(c echo.Context, message ...string) {
-	l := logrus.Logger{}
+	l := logrus_init.NewLogger()
 
 	l.WithFields(
 		logrus.Fields{
